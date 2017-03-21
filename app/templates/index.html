@@ -1,0 +1,7 @@
+ {% extends "base.html" %}
+ {% block contentdsli1 %}
+     <h1>hell, {{ user.nickname }} !</h1>
+     {% for post in posts %}
+     <div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p></div>
+     {% endfor %}
+ {% endblock %}

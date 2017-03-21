@@ -1,0 +1,16 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+     {% if title %}
+     <title>{{ tile }} - dsli title</title>
+     {% else %}
+     <title>other title</title>
+     {% endif %}
+ </head>
+ <body>
+     <div>dsli home<a href="/index"> Home of dsli </a></div>
+     <hr>
+     {% block contentdsli1 %}
+     {% endblock %}
+ </body>
+ </html>
