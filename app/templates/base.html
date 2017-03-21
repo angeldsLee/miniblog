@@ -8,8 +8,17 @@
      {% endif %}
  </head>
  <body>
-     <div>dsli home<a href="/index"> Home of dsli </a></div>
-     <hr>
+    <div>dsli home<a href="/index"> Home of dsli </a></div>
+    <hr>
+     {% with messages = get_flashed_messages() %}
+     	{% if messages %}
+         <ul>
+         {% for message in messages %}
+        	<li>{{ message }} </li>
+          {% endfor %}
+         </ul>
+    	{% endif %}
+     {% endwith %}
      {% block content %}
      {% endblock %}
  </body>
