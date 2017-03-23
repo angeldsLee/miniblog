@@ -2,13 +2,18 @@
  <html>
  <head>
      {% if title %}
-     <title>{{ tile }} - dsli title</title>
+     <title>{{ tile }} - minilog</title>
      {% else %}
-     <title>other title</title>
+     <title>minilog</title>
      {% endif %}
  </head>
  <body>
-    <div>dsli home<a href="/index"> Home of dsli </a></div>
+    <div>minilog
+        <a href="{{ url_for('index') }}"> Home of dsli </a>
+        {% if g.user.is_authenticated %}
+        | <a href="{{ url_for('logout') }}">Log out</a>
+        {% endif %}
+        </div>
     <hr>
      {% with messages = get_flashed_messages() %}
      	{% if messages %}
