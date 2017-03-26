@@ -51,6 +51,28 @@ def login():
                             form=form,
                             providers=app.config['OPENID_PROVIDERS'])
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route('/user/<nickname>')
+@login_required
+def user(nickname):
+    user = User.query.filter_by(nickname=nickname).first()
+    print "dsli user" 
+    print user
+    if user == None:
+        flash('User %s not found.' % nickname)
+        return redirect(url_for('index'))
+    posts = [
+        {'author' : user, 'body' : 'test post #1'},
+        {'author' : user, 'body' : 'test post #2'}
+    ]
+    return render_template('user.html',
+                            user=user,
+                            posts=posts)
+
 
 @oid.after_login
 def after_login(resp):
@@ -74,10 +96,11 @@ def after_login(resp):
     return redirect(request.args.get('next') or url_for('index'))
     # redirect to the next page, or the index page if a next page was not provided in the request
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
+
+
+
+
+
 
 
 
