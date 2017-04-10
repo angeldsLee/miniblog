@@ -44,13 +44,13 @@ def login():
     if g.user is not None and g.user.is_authenticated: # if a user is already logged in
         return redirect(url_for('index'))
     form = LoginForm()
-    print "form = LoginForm()"
+    # print "form = LoginForm()"
     if form.validate_on_submit():
-        print "validate_on_submit"
+        # print "validate_on_submit"
         session['remember_me'] = form.remember_me.data
         return oid.try_login(form.openid.data, ask_for=['nickname', 'email']) # trigger authentication
 
-    print "not pass validate_on_submit"
+    # print "not pass validate_on_submit"
     return render_template('login.html',
                             title='Sign In',
                             form=form,
@@ -81,8 +81,8 @@ def logout():
 @login_required
 def user(nickname):
     user = User.query.filter_by(nickname=nickname).first()
-    print "dsli user" 
-    print user
+    # print "dsli user" 
+    # print user
     if user == None:
         flash('User %s not found.' % nickname)
         return redirect(url_for('index'))
@@ -117,6 +117,16 @@ def after_login(resp):
     return redirect(request.args.get('next') or url_for('index'))
     # redirect to the next page, or the index page if a next page was not provided in the request
 
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500   
 
 
 
